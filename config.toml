@@ -1,5 +1,0 @@
-baseURL = "http://melbournetransportmap.com/"
-languageCode = "en-au"
-title = "Melbourne Transport Map"
-RelativeURLs=true
-CanonifyURLs=true
