@@ -36,7 +36,7 @@
 
 					// Images (in the format of 'url': 'alignment').
 						images: {
-							'images/mappreview1.jpg': 'center',
+							'images/mappreview1.JPG': 'center',
 							'images/tram.jpg': 'center',
 							'images/train.jpg': 'center',
 							'images/bus.jpg': 'center',
