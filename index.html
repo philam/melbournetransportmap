@@ -35,6 +35,33 @@
 				
 			</form> -->
 
+		<!-- Countdown -->
+		<p id="countdown"></p>
+
+		<script>
+		var countDownDate = new Date("Dec 12, 2019 16:00:00").getTime();
+
+		var x = setInterval(function() {
+
+		  var now = new Date().getTime();
+
+		  var distance = countDownDate - now;
+
+		  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		  // Display the result in the element with id="demo"
+		  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+		  + minutes + "m " + seconds + "s ";
+
+		  if (distance < 0) {
+			clearInterval(x);
+			document.getElementById("countdown").innerHTML = "We're ready to launch!";
+		  }
+		}, 1000);
+		</script>
 			
 		<!-- Begin Mailchimp Signup Form -->
 			<div id="mc_embed_signup">
@@ -65,7 +92,7 @@
 					<li><a href="https://maps.philipmallis.com" class="icon fa-envelope-o"><span class="label">Site</span></a></li>
 				</ul>
 				<ul class="copyright">
-					<li>&copy; Philip Mallis 2018</li><li>Site template: <a href="http://html5up.net">HTML5 UP</a></li>
+					<li>&copy; Philip Mallis 2019</li><li>Site template: <a href="http://html5up.net">HTML5 UP</a></li>
 				</ul>
 			</footer>
 
