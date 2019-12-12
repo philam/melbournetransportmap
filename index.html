@@ -1,104 +1,231 @@
 <!DOCTYPE HTML>
-<!--
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>The Melbourne Transport Map</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!-- Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-82865136-4"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-
-		  gtag('config', 'UA-82865136-4');
-		</script>
-	</head>
-	<body class="is-preload">
-
-		<!-- Header -->
-			<header id="header">
-				<h1>Find your way.</h1>
-				<p>A new public transport map for Melbourne<br />
-				Coming soon in 2019.<br /></p>
-				<p><a href=../about>Learn more</a></p>
-			</header>
-
-		<!-- Signup Form 
-			<form id="signup-form" method="post" action="#">
-				<input type="email" name="email" id="email" placeholder="Email Address" />
-				
-			</form> -->
-
-		<!-- Countdown -->
-		<p id="countdown"></p>
-
-		<script>
-		var countDownDate = new Date("Dec 12, 2019 16:00:00").getTime();
-
-		var x = setInterval(function() {
-
-		  var now = new Date().getTime();
-
-		  var distance = countDownDate - now;
-
-		  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-		  // Display the result in the element with id="demo"
-		  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-		  + minutes + "m " + seconds + "s ";
-
-		  if (distance < 0) {
-			clearInterval(x);
-			document.getElementById("countdown").innerHTML = "We're ready to launch!";
-		  }
-		}, 1000);
-		</script>
-			
-		<!-- Begin Mailchimp Signup Form -->
-			<div id="mc_embed_signup">
-			<form action="https://philipmallis.us19.list-manage.com/subscribe/post?u=0bf1a827e187e9e4c7cd70c69&amp;id=67874fb752" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-			<div id="mc_embed_signup_scroll">
-				
-			<div class="mc-field-group" style="width: 18em">
-				<input type="email" placeholder="Email address" name="EMAIL" class="required email" id="mce-EMAIL">
-			</div>
-				<div id="mce-responses" class="clear">
-					<div class="response" id="mce-error-response" style="display:none"></div>
-					<div class="response" id="mce-success-response" style="display:none"></div>
-				</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-				<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_0bf1a827e187e9e4c7cd70c69_67874fb752" tabindex="-1" value=""></div>
-				<br><div class="clear"><input type="submit" value="Subscribe for updates" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-				</div>
-			</form>
-			</div> 
-
-		<!--End mc_embed_signup-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The Melbourne Transport Map</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+	<link rel="stylesheet" href="../assets/css/leaflet-sidebar.css" />
+	<script src="https://kit.fontawesome.com/a106d23a6a.js" crossorigin="anonymous"></script>
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+    <![endif]-->
+    <style type="text/css">
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
 		
-		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="https://twitter.com/philipmallis" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="https://facebook.com/philipmallismaps" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="https://github.com/philam" class="icon fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="https://maps.philipmallis.com" class="icon fa-envelope-o"><span class="label">Site</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Philip Mallis 2019</li><li>Site template: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
+		body {
+            padding: 0;
+            margin: 0;
+        }
 
-		<!-- Scripts -->
-			<script src="assets/js/main.js"></script>
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
 
-	</body>
+        .lorem {
+            font-style: italic;
+            text-align: justify;
+            color: #AAA;
+        }
+    </style>
+	<!-- Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-82865136-4"></script>
+	<script>
+		 window.dataLayer = window.dataLayer || [];
+		 function gtag(){dataLayer.push(arguments);}
+		 gtag('js', new Date());
+
+		 gtag('config', 'UA-82865136-4');
+	</script>
+</head>
+
+<body>
+    <!-- optionally define the sidebar content via HTML markup -->
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+
+        <!-- nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <!-- top aligned tabs -->
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
+                <li><a href="#help" role="tab"><i class="fa fa-question-circle"></i></a></li>
+				<li><a href="#contact" role="tab"><i class="fa fa-envelope"></i></a></li>
+            </ul>
+
+            <!-- bottom aligned tabs -->
+            <ul role="tablist">
+                <li><a href="https://maps.philipmallis.com"><i class="fa fa-globe-asia"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- panel content -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                    melbourne transport map
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <p>A comprehensive public transport map for Greater Melbourne.</p>
+				<p><b>Download a PDF copy of the map <a href="../assets/pdfs/Melbourne_Transport_Map_v0.1.pdf">here</a>.</b></p>
+                <h2>About the map</h2>
+				<p>This is by far the largest and hardest map project that I've ever done.</p>
+				<p>All up, it has taken me 14 months and hundreds of hours to put together this map of all public transport in Greater Melbourne. I'm very relieved to finally release the first version!</p>
+				<h3>Why this map?</h3>
+				<p>While PTV does publish local maps for particular areas showing all public transport modes, there is no publicly available equivalent to cover the whole city.</p>
+				<p>Given that trips are not exclusive to any single mode, I thought that coming up with a map to fill this gap might be useful.</p>
+				<p>There are also several issues with the PTV local area maps that make them annoying to use for many purposes. These include:</p>
+				<ul>
+					<li><b>Inconsistent terminus/interchange labelling</b> - some only lable those that terminate (e.g. Caroline Springs) and others list all routes that go through (e.g. Box Hill)</li>
+					<li><b>Major interchanges are very hard to understand</b> - this mainly because they have to cram every single route's exact geography into a tiny space</li>
+					<li><b>Frequency/service span not shown</b> - this makes it hard to work out the best route without having to trawl through timetables or journey planners</li>
+					<li><b>Terminus bubbles list routes reading top to bottom rather than left to right</b> - this might not matter for some people, but it's always made it difficult for me to read given that English is a language written from left to right</li>
+					<li><b>Geographic maps have greatly limited space</b> - this then creates inconsistencies - e.g. forced to abbreviate 'Deer Park' to 'Deer Pk' on PTV map</li>
+					<li><b>Every route is drawn individually</b> - drawing each route separately is useful if you know the route that you need to take. But if you don't know the route but know roughly where to get to and from, this just makes it confusing.</li>
+					<li><b>Separate colours for each route</b> - this means that the palette runs out in areas with a high-density of routes and separate routes have to double up with the same colour (e.g. Hoppers Crossing - dark blue reused which could lead people to think that the 181/498 route is a through route). This, again, makes maps difficult to read (e.g. area around Knox).</li>
+				</ul>
+				<p>As I always say, this is by no means arguing that the PTV maps are useless or that my map is perfect. Both styles of map have advantages and disadvantages. Each is more useful for particular journeys and passengers than others. All that I aim to do with this project is introduce another option for people to use if they wish.</p>
+				<br>
+				<h3>Making the map</h3>
+				<p>This was a long and sometimes painful exercise. The sheer scale of the project meant that any task that might take a couple of hours on a smaller map ended up taking days or weeks to complete on this one.</p>
+				<p>Before I began, I spent a while thinking about how to organise the map and establish some design rules. In the end, there were quite a few that I tried to stick to as much as possible. But the most important rule for a map like this is to <b>create a clear visual hierarchy</b>.</p>
+				<p>What this means that is that a user can glance at a map from afar and at least vaguely see where the most important features of the map are located and how they relate to the rest of the elements.</p>
+				<p>In the case of this map, this consists of major interchanges and railway lines. These are the busiest and often the best-serviced parts of the public transport network, so it's important to highlight them above, say, the route 609 bus (which the PTV map visually treats equally with the Ringwood Line). This is done with line thickness, directness and colour palette.</p>
+				<p>The first parts of the map that I drew were the railways and CBD so that the rest of the map was built around these key anchors. Then it was areas with grid-like tram and bus routes. These were actually some of the hardest areas to design.</p>
+				<p>With meandering routes, there is a lot more flexibility to 'iron out' random curves or kinks and make them connect to the rest of the network more logically. A straight route, like the route 246 bus, is virtually impossible to take away from its straight north-south direction.</p>
+				<p>This freedom from strict geography means a lot of space can be saved and efficiences created. It also allows 'nudges' to be built into the design that aren't possible or are much hard with a geographic map. For example, the bus routes at Laverton Station are slightly offset to suggest to the viewer that they are not through routes.</p>
+				<p>Finally, there were some areas that took me weeks to design on their own, just because they were so confusing. Endeavour Hills, Middle Brighton, Highpoint and South Morang just about did my head in.</p>
+				<br>
+				<h2>Future plans</h2>
+				<p>Given that routes change all the time, this map will require updates. However, I don't have the time to do this as it happens. There will probably be a time lag of at least a couple of weeks.</p>
+				<p>For the website itself, there is a roadmap for future improvements. Some of these include:</p>
+				<ul>
+					<li>Main street names across the whole map (v1.1)
+					<li>Major landmarks and key destinations (v1.2)
+					<li>Interactive labels (v2.0)
+					<li>Searchable destinations (v2.0)
+					<li>Toggleable layers (e.g. bus, train, tram) (v2.1)
+				</ul>
+				<p>I should emphasise that this is a plan only, and I can't guarantee that all of these will be implemented soon, if at all. I want to take a break from this project for a while, as I have other maps to work on in the meantime. There may also be technological constraints that I'm not yet aware of.</p>
+				<p>If you do have any suggestions for other features or could help me get these implemented, please feel free to <a href="https://maps.philipmallis.com/contact">get in touch</a>.</p>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="help">
+                <h1 class="leaflet-sidebar-header">
+                    faqs
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                <h2>Index</h2>
+                <ol>
+                    <li><a href="#faq1">Is this map free to use?</a></li>
+                    <li><a href="#faq2">What software did you use?</a></li>
+                    <li><a href="#faq3">The route of a bus/tram/train/ferry/bike path doesn't actually look like that. Is it a mistake?</a></li>
+                    <li><a href="#faq4">What is the difference between a 'major' and 'minor' interchange?</a></li>
+					<li><a href="#faq5">Which bus and tram routes are included in the square boxes?</a></li>
+					<li><a href="#faq6">Why are there two or three termini with the same name (e.g. Williamstown)?</a></li>
+					<li><a href="#faq7">Why are there three categories of bus routes?</a></li>
+					<li><a href="#faq8">I've found a mistake! How do I get it fixed?</a></li>
+                </ol>
+				
+				<a name="faq1"><h3>Is this map free to use?</h3>
+				<p>Yes! While the map is copyright, it is freely available for anyone to use.</p>
+				<p>However, if you wish to modify, sell or otherwise do anything with this map other than use it at face value, please <a href="https://maps.philipmallis.com/contact">contact me first</a>.</p>
+				
+				<a name="faq2"><h3>What software did you use?</h3>
+				<p>I work with a combination of Adobe Illustrator and QGIS. Early in my design process, I also use old-fashioned whiteboards, paper and pencils.</p>
+				<p>This map uses <a href="https://leafletjs.com">Leaflet</a> to render the slippy map.</p>
+								
+				<a name="faq3"><h3>The route of a bus/tram/train/ferry/bike path doesn't actually look like that. Is it a mistake?</h3>
+				<p>Probably not.</p>
+				<p>Because this is a <a href="https://maps.philipmallis.com/what-are-schematic-maps/">schematic map</a>, the geography of some routes is more distorted than others in the design. For example, in reality, the 606 bus runs in a pretty direct east-west route. But on this map it is shown as bending slightly in ways that don't exactly replicate its geographical route. 
+				<p>This was done to accomodate connecting routes in a way that is easier to read. Other routes, like the 506, are shown pretty much exactly as they are 'on the ground'.</p>
+				<p>Even if staying 100% true to the geography of a route was possible, it was not be desireable. One of the main purposes of this map is to simplify small diversions and meandering curves to emphasise connections and interchanges rather than exact geographical accuracy. This is where most of the design work has gone.<p>
+				
+				<a name="faq4"><h3>What is the difference between a 'major' and 'minor' interchange?</h3>
+				<p>I have used the definition described in the other tabs to determine what constitutes a 'major' or 'minor' interchange. While it is somewhat arbitrary, there has to be a point where a line is drawn. It is important to distinguish between the two to maintain the visual hierarchy of the map - one of the main features of this project.</p>
+				
+				<a name="faq5"><h3>Which bus and tram routes are included in the square boxes?</h3>
+				<p>Only routes that terminate or originate at specific locations have been included. Services that stop at an interchange but continue through are not included on these boxes. This was done to reduce visual clutter and make it easier to follow routes from their origin and destination.</p>
+				
+				<a name="faq6"><h3>Why are there two or three termini with the same name (e.g. Williamstown)?</h3>
+				<p>Early in my design process, I was planning to rename duplicate termini to alternative place names, especially where a railway station already exists.<p>
+				<p>However, I changed this while doing Stage 2 of the map design (placing terminus routes and names) to showing on the map what is displayed on vehicles and timetables. This is just to avoid confusion.</p>
+				
+				<a name="faq7"><h3>Why are there three categories of bus routes?</h3>
+				<p>Including three categories of bus route was something that I thought about for a long time.</p>
+				<p>I decided to separate the three because of a change in the map that happened midway through its design. The map began as a frequency map - thicker lines would mean higher frequency of services. However, as I continued adding the hundreds of routes, it gradually dawned on me that this would take much longer than I expected.</p>
+				<p>As a result, I had to think about how to differentiate between buses that come only a few times per day and the high-frequenty buses that carry millions of people every year. As a compromise solution, I opted to include the three categories of bus route that you can now see on this map.</p>
+				
+				<a name="faq8"><h3>I've found a mistake! How do I get it fixed?</h3>
+				<p>Thank you! The preferred method of letting me know is to <a href="https://github.com/philam/melbournetransportmap/issues">create a new issue on the Github page</a>.</p>
+				<p>Otherwise, you can contact me <a href="https://maps.philipmallis.com/contact">here</a>.</p>
+				
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="contact">
+                <h1 class="leaflet-sidebar-header">
+					contact
+					<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                </h1>
+                <p>
+                    If you have any suggestions, corrections or comments, please let me know <a href="https://maps.philipmallis.com/contact">here</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+	<script src="../assets/js/leaflet-sidebar.js"></script>
+    <script type="text/javascript" src="L.TileLayer.Zoomify.js"></script>  
+    <script type="text/javascript">
+
+        var map = L.map('map').setView(new L.LatLng(0,0), 0);
+
+        L.tileLayer.zoomify('../assets/maptiles/', { 
+            width: 20715, 
+            height: 19206,
+			tolerance: 0.3,
+            attribution: '&copy; <a href="https://maps.philipmallis.com">Philip Mallis 2019</a>'
+        }).addTo(map);
+		
+		// create the sidebar instance and add it to the map
+        var sidebar = L.control.sidebar({ container: 'sidebar' })
+            .addTo(map)
+            .open('home');
+
+        // add panels dynamically to the sidebar
+        sidebar
+            .addPanel({
+                id:   'js-api',
+                tab:  '<i class="fa fa-gear"></i>',
+                title: 'JS API',
+                pane: '<p>The Javascript API allows to dynamically create or modify the panel state.<p/><p><button onclick="sidebar.enablePanel(\'mail\')">enable mails panel</button><button onclick="sidebar.disablePanel(\'mail\')">disable mails panel</button></p><p><button onclick="addUser()">add user</button></b>',
+            })
+            // add a tab with a click callback, initially disabled
+            .addPanel({
+                id:   'mail',
+                tab:  '<i class="fa fa-envelope"></i>',
+                title: 'Messages',
+                button: function() { alert('opened via JS callback') },
+                disabled: true,
+            })
+
+        // be notified when a panel is opened
+        sidebar.on('content', function (ev) {
+            switch (ev.id) {
+                case 'autopan':
+                sidebar.options.autopan = true;
+                break;
+                default:
+                sidebar.options.autopan = false;
+            }
+        });
+
+    </script>
+</body>
 </html>
