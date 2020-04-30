@@ -49,9 +49,8 @@
 
 <body>
     <!-- optionally define the sidebar content via HTML markup -->
-	<!-- <div id="sidebar" class="leaflet-sidebar collapsed"> -->
-
-    <div id="sidebar">
+	
+    <div id="sidebar" class="leaflet-sidebar collapsed">
 
         <!-- nav tabs -->
         <div class="leaflet-sidebar-tabs">
@@ -245,8 +244,10 @@
 		
 		// create the sidebar instance and add it to the map
         var sidebar = L.control.sidebar({ container: 'sidebar' })
-            .addTo(map)
-            .open('home');
+            .addTo(map);
+			
+		// open sidebar
+		sidebar.open('home');
 		
         // add panels dynamically to the sidebar
         sidebar
@@ -260,13 +261,10 @@
             .addPanel({
                 id:   'mail',
                 tab:  '<i class="fa fa-envelope"></i>',
-                title: 'Messages',
+                title: 'Home',
                 button: function() { alert('opened via JS callback') },
                 disabled: true,
             })
-
-		// Show sidebar
-		sidebar.show();
 
         // be notified when a panel is opened
         sidebar.on('content', function (ev) {
