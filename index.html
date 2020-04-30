@@ -49,8 +49,7 @@
 
 <body>
     <!-- optionally define the sidebar content via HTML markup -->
-	<!-- <div id="sidebar" class="leaflet-sidebar collapsed"> -->
-    <div id="sidebar" class="leaflet-sidebar">
+    <div id="sidebar" class="leaflet-sidebar collapsed">
 
         <!-- nav tabs -->
         <div class="leaflet-sidebar-tabs">
@@ -225,6 +224,7 @@
             </div>
         </div>
     </div>
+
     <div id="map"></div>
     <script type="text/javascript" src="L.TileLayer.Zoomify.js"></script>  
     <script type="text/javascript">
@@ -245,7 +245,10 @@
         var sidebar = L.control.sidebar({ container: 'sidebar' })
             .addTo(map)
             .open('home');
-
+			
+		// sidebar open by default
+		sidebar.open('home');
+		
         // add panels dynamically to the sidebar
         sidebar
             .addPanel({
@@ -273,6 +276,8 @@
                 sidebar.options.autopan = false;
             }
         });
+		
+
 
     </script>
 </body>
