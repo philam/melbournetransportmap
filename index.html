@@ -245,9 +245,6 @@
         var sidebar = L.control.sidebar({ container: 'sidebar' })
             .addTo(map)
             .open('home');
-			
-		// Show sidebar
-		sidebar.show();
 		
         // add panels dynamically to the sidebar
         sidebar
@@ -265,6 +262,9 @@
                 button: function() { alert('opened via JS callback') },
                 disabled: true,
             })
+
+		// Show sidebar
+		sidebar.show();
 
         // be notified when a panel is opened
         sidebar.on('content', function (ev) {
