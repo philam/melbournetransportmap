@@ -78,7 +78,7 @@
 
                 <p>A comprehensive public transport map for Greater Melbourne.</p>
 				<p><b>Download a PDF copy of the map <a href="../assets/pdfs/Melbourne_Transport_Mapv1.0.pdf">here</a>.</b></p>
-				<p><img src="../images/Sidebar_legendv1.0.png" alt="Map legend" width="100%" height="100%"></img></p>
+				<p><img src="../images/Sidebar_legend.png" alt="Map legend" width="100%" height="100%"></img></p>
             </div>
             <div class="leaflet-sidebar-pane" id="about">
                 <h1 class="leaflet-sidebar-header">
@@ -128,7 +128,7 @@
 				<br>
 				<h2>Credits and acknowledgements</h2>
 				<p>Thank you to <a href="https://melbourneontransit.blogspot.com">Peter Parker</a> who reviewed an early version of the map and helped me fix errors.</p>
-				<p>Also a huge thank you to everyone who let me know about mistakes and suggestions for improvements. In no particular order (and apologies if I missed anyone):
+				<p>Also a huge thank you to everyone else who let me know about mistakes and suggestions for improvements. In no particular order (and apologies if I missed anyone):
 				<ul>
 					<li>Craig Halsall</li>
 					<li>kiwichris1709 (via Reddit)</li>
@@ -153,11 +153,13 @@
 					<li>Thomas Hobley (via Twitter)</li>
 					<li>Paul Nicholson (via Twitter)</li>
 					<li>Rohan Leppert (via Twitter)</li>
+					<li>Liupotatomelon (via Twitter)</li>
 					<li>Michael (via email)</li>
 					<li>Noah (via email)</li>
 					<li>George (via email)</li>
 					<li>Nathan (via email)</li>
 					<li>Nancy (via email)</li>
+					<li>kaiwhara (via Github)</li>
 				</ul>
 				</p>
             </div>
@@ -207,6 +209,9 @@
 				<p>Including three categories of bus route was something that I thought about for a long time.</p>
 				<p>I decided to separate the three because of a change in the map that happened midway through its design. The map began as a frequency map - thicker lines would mean higher frequency of services. However, as I continued adding the hundreds of routes, it gradually dawned on me that this would take much longer than I expected.</p>
 				<p>As a result, I had to think about how to differentiate between buses that come only a few times per day and the high-frequenty buses that carry millions of people every year. As a compromise solution, I opted to include the three categories of bus route that you can now see on this map.</p>
+				<p>A Smartbus route (orange) are those <a href="https://en.wikipedia.org/wiki/SmartBus">designated as such</a> by PTV.</p>
+				<p>A 'trunk' route (brown) on this map is a combination of two or more routes that combine to form a higher frequency along a common corridor. For simplicity, I've kept this designation for routes for which PTV publishes a combined timetable (e.g. the <a href="https://www.ptv.vic.gov.au/route/5537/city-bulleen-doncaster-sc-via-kew-junction/">200/207</a>).</p>
+				<p>A 'local' route (pink) on this map is all other routes. A light pink colour is used to denote routes that operate only part-time or to show part-time route deviations.</p>
 				
 				<a name="faq8"><h3>I've found a mistake! How do I get it fixed?</h3>
 				<p>Thank you! The preferred method of letting me know is to <a href="https://github.com/philam/melbournetransportmap/issues">create a new issue on the Github page</a>.</p>
