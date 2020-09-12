@@ -237,7 +237,10 @@
     <script type="text/javascript">
 	
 
-        var map = L.map('map').setView(new L.LatLng(0,0), 0);
+        var map = L.map('map', {
+			center: [0, 0],
+			zoom: 9
+		});
 
             //width: 20715, 
             //height: 19446,
