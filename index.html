@@ -235,23 +235,18 @@
     <div id="map"></div>
     <script type="text/javascript" src="L.TileLayer.Zoomify.js"></script>  
     <script type="text/javascript">
-	
 
-        var map = L.map('map', {
-			crs: L.CRS.Simple,
-			center: [50, 50],
-			zoom: 3,
-			zoomSnap: 0,
-		});
+        var map = L.map('map').setView(new L.LatLng(0,0), 0);
 
-            //width: 20715, 
-            //height: 19446,
-
-		// create the image
-		var imageUrl = '../svg/Melbourne_Transport_Mapv1.1.svg',
-			imageBounds = [[0, 0], [100, 100]];
-
-		L.imageOverlay(imageUrl, imageBounds).addTo(map);
+        L.tileLayer.zoomify('../assets/maptiles/', { 
+            width: 20715, 
+            height: 19446,
+			tolerance: 0.3,
+            attribution: '&copy; <a href="https://maps.philipmallis.com">Philip Mallis 2020</a>'
+        }).addTo(map);
+		
+		// add zoom control
+		new L.Control.Zoom({ position: 'topright' }).addTo(map);
 		
 		// create the sidebar instance and add it to the map
         var sidebar = L.control.sidebar({ container: 'sidebar' })
@@ -259,6 +254,23 @@
 			
 		// open sidebar
 		sidebar.open('home');
+		
+        // add panels dynamically to the sidebar
+        sidebar
+            .addPanel({
+                id:   'js-api',
+                tab:  '<i class="fa fa-gear"></i>',
+                title: 'JS API',
+                pane: '<p>The Javascript API allows to dynamically create or modify the panel state.<p/><p><button onclick="sidebar.enablePanel(\'mail\')">enable mails panel</button><button onclick="sidebar.disablePanel(\'mail\')">disable mails panel</button></p><p><button onclick="addUser()">add user</button></b>',
+            })
+            // add a tab with a click callback, initially disabled
+            .addPanel({
+                id:   'mail',
+                tab:  '<i class="fa fa-envelope"></i>',
+                title: 'Home',
+                button: function() { alert('opened via JS callback') },
+                disabled: true,
+            })
 
         // be notified when a panel is opened
         sidebar.on('content', function (ev) {
