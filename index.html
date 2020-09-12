@@ -248,9 +248,6 @@
 
 		L.imageOverlay(imageUrl, imageBounds).addTo(map);
 		
-		// add zoom control
-		new L.Control.Zoom({ position: 'topright' }).addTo(map);
-		
 		// create the sidebar instance and add it to the map
         var sidebar = L.control.sidebar({ container: 'sidebar' })
             .addTo(map);
