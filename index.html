@@ -246,7 +246,7 @@
 		var imageUrl = '../svg/Melbourne_Transport_Mapv1.1.svg',
 			imageBounds = [[0, 0], [100, 100]];
 
-		L.imageOverlay(imageUrl, imageBounds, attribution: '&copy; <a href="https://maps.philipmallis.com">Philip Mallis 2020</a>').addTo(map);
+		L.imageOverlay(imageUrl, imageBounds).addTo(map);
 		
 		// add zoom control
 		new L.Control.Zoom({ position: 'topright' }).addTo(map);
